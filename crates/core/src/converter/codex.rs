@@ -475,6 +475,8 @@ pub(super) fn import(
                 let call_id = format!("call_{}", &uuid_hex()[..24]);
                 let fc_id = format!("fc_{}", uuid_hex());
                 let fco_id = format!("fco_{}", uuid_hex());
+                let ctc_id = format!("ctc_{}", uuid_hex());
+                let ctco_id = format!("ctco_{}", uuid_hex());
                 let item_id = format!("exec-{}", uuid());
                 match inv.canonical {
                     tools::CanonicalTool::Write { path, content } => {
@@ -487,7 +489,7 @@ pub(super) fn import(
                         rollout.emit(
                             &call_ts,
                             "response_item",
-                            json!({"type":"custom_tool_call","id":fc_id,"status":"completed","call_id":call_id,"name":"apply_patch","input":patch}),
+                            json!({"type":"custom_tool_call","id":ctc_id,"status":"completed","call_id":call_id,"name":"apply_patch","input":patch}),
                         )?;
                         let mut changes = serde_json::Map::new();
                         changes.insert(path.clone(), json!({"type":"add","content":content}));
@@ -499,7 +501,7 @@ pub(super) fn import(
                         rollout.emit(
                             &res_ts,
                             "response_item",
-                            json!({"type":"custom_tool_call_output","id":fco_id,"call_id":call_id,"output":out_str}),
+                            json!({"type":"custom_tool_call_output","id":ctco_id,"call_id":call_id,"output":out_str}),
                         )?;
                         proj_items.push(ProjItem {
                             turn: turn.clone(),
@@ -520,7 +522,7 @@ pub(super) fn import(
                         rollout.emit(
                             &call_ts,
                             "response_item",
-                            json!({"type":"custom_tool_call","id":fc_id,"status":"completed","call_id":call_id,"name":"apply_patch","input":patch}),
+                            json!({"type":"custom_tool_call","id":ctc_id,"status":"completed","call_id":call_id,"name":"apply_patch","input":patch}),
                         )?;
                         let mut changes = serde_json::Map::new();
                         changes.insert(path.clone(), json!({"type":"delete","content":""}));
@@ -532,7 +534,7 @@ pub(super) fn import(
                         rollout.emit(
                             &res_ts,
                             "response_item",
-                            json!({"type":"custom_tool_call_output","id":fco_id,"call_id":call_id,"output":out_str}),
+                            json!({"type":"custom_tool_call_output","id":ctco_id,"call_id":call_id,"output":out_str}),
                         )?;
                         proj_items.push(ProjItem {
                             turn: turn.clone(),
@@ -573,7 +575,7 @@ pub(super) fn import(
                         rollout.emit(
                             &call_ts,
                             "response_item",
-                            json!({"type":"custom_tool_call","id":fc_id,"status":"completed","call_id":call_id,"name":"apply_patch","input":patch}),
+                            json!({"type":"custom_tool_call","id":ctc_id,"status":"completed","call_id":call_id,"name":"apply_patch","input":patch}),
                         )?;
                         let mut changes = serde_json::Map::new();
                         changes.insert(
@@ -588,7 +590,7 @@ pub(super) fn import(
                         rollout.emit(
                             &res_ts,
                             "response_item",
-                            json!({"type":"custom_tool_call_output","id":fco_id,"call_id":call_id,"output":out_str}),
+                            json!({"type":"custom_tool_call_output","id":ctco_id,"call_id":call_id,"output":out_str}),
                         )?;
                         proj_items.push(ProjItem {
                             turn: turn.clone(),

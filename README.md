@@ -6,15 +6,17 @@ A native desktop application built with Rust + Tauri for viewing, editing, gener
 
 ![Обзор: все среды, диалоги и бэкапы (тема Graphite) / Overview: all environments, dialogues, and backups (Graphite theme)](docs/screenshots/overview.png)
 
-## Последнее обновление (v2.1.0) / Latest Update (v2.1.0)
+## Последнее обновление (v2.1.1) / Latest Update (v2.1.1)
 
 **Русский:**
+- **Хотфикс Codex (`v2.1.1`)**: исправлены префиксы ID для `custom_tool_call` (`ctc_`) и `custom_tool_call_output` (`ctco_`) при генерации и конвертации диалогов в Codex - устранена ошибка OpenAI API `invalid_id_prefix` при отправке новых сообщений в сгенерированный тред.
 - **Новая функция - Генератор диалогов**: встроенное создание реалистичных диалогов с нуля через **OpenRouter** (включая бесплатные `:free` модели), **DeepSeek** и любой **Custom OpenAI-совместимый API** (Ollama, LM Studio и др.). Доступна настройка сценария, объёма, языка, уровня размышлений (`Effort`), температуры, привязки к папке проекта, системного промпта, вызовов инструментов (`tool_use` / `tool_result`) и блоков `thinking`. Перед сохранением диалог можно просмотреть, отредактировать и сохранить в любую среду, а все сгенерированные чаты автоматически сохраняются в раздел «Сохраненные». *Примечание: некоторые модели могут возвращать отказы или работать некорректно на чувствительных/триггерных темах (например, читы и подобные сценарии) - в таких случаях рекомендуем использовать DeepSeek либо вручную корректировать системный промпт в расширенных настройках.*
 - **Производительность и большие диалоги**: ускорено сохранение и редактирование тяжёлых файлов и баз (потоковое копирование, частичная перезапись хвоста, кэширование заголовков и статистики контекста, быстрые префильтры поиска). Добавлены скользящее окно рендера и инкрементальная подгрузка для плавной работы на длинных чатах, кнопка быстрого перехода к последним сообщениям и автоматическая подгрузка истории при прокрутке вверх.
 - **Поиск по тексту**: добавлен переключатель точного поиска по целому слову (`W`, чтобы различать, например, `"чит"` и `"читать"`) и живая подсветка найденных совпадений прямо в сообщениях.
 - **Исправления и интерфейс**: исправлено редактирование уведомлений Claude (`Safety Classifier`, `Notice`, `isMeta`) - правка больше не превращает их в сообщения пользователя; прогресс-бар сохранения поднят поверх затемнения модальных окон; добавлены плавные переходы и верхняя полоса загрузки между диалогами; переведены системные предупреждения и ошибки бэкенда на `RU / UK / EN`.
 
 **English:**
+- **Codex Hotfix (`v2.1.1`)**: fixed ID prefixes for `custom_tool_call` (`ctc_`) and `custom_tool_call_output` (`ctco_`) when generating or converting dialogues into Codex, resolving the OpenAI API `invalid_id_prefix` error when sending follow-up messages.
 - **New Feature - Dialogue Generator**: built-in generator for creating realistic multi-turn dialogues from scratch via **OpenRouter** (including `:free` models), **DeepSeek**, and any **Custom OpenAI-compatible API** (Ollama, LM Studio, etc.). Supports scenario, length, language, reasoning effort, temperature, optional project folder context, system prompt, synthetic tool calls (`tool_use` / `tool_result`), and `thinking` blocks. Preview and edit turns before saving directly into any supported environment, with automatic draft saving under "Saved". *Note: some models may refuse or behave inconsistently on sensitive or trigger topics (such as cheats or similar subjects) - for those scenarios, we recommend using DeepSeek or manually adjusting the system prompt in advanced settings.*
 - **Performance & Large Dialogues**: significantly faster saving and editing on heavy files and databases (streaming backup copies, tail-only rewrites, cached titles and context stats, fast byte pre-filters). Added a sliding render window and incremental loading for smooth scrolling on massive chats, a quick jump-to-latest button, and automatic loading of older messages when scrolling up.
 - **In-Chat Search**: added a Whole Word toggle (`W`, distinguishing e.g. `"read"` vs `"reading"`) and live match highlighting directly inside messages.
@@ -140,21 +142,21 @@ Pre-built installers for all platforms are published automatically in [GitHub Re
 
 ### Windows
 
-1. Скачайте `K1tty Tools_2.1.0_x64-setup.exe` (или `.msi`) со страницы [Releases](https://github.com/quesada-lab/k1tty-tools/releases).
+1. Скачайте `K1tty Tools_2.1.1_x64-setup.exe` (или `.msi`) со страницы [Releases](https://github.com/quesada-lab/k1tty-tools/releases).
 2. Запустите установщик. Если появится окно Windows SmartScreen (сборка без платной цифровой подписи), нажмите **«Подробнее» -> «Выполнить в любом случае»**.
 
-1. Download `K1tty Tools_2.1.0_x64-setup.exe` (or `.msi`) from [Releases](https://github.com/quesada-lab/k1tty-tools/releases).
+1. Download `K1tty Tools_2.1.1_x64-setup.exe` (or `.msi`) from [Releases](https://github.com/quesada-lab/k1tty-tools/releases).
 2. Run the installer. If Windows SmartScreen appears (unsigned open-source build), click **More info -> Run anyway**.
 
 ### macOS (Apple Silicon & Intel)
 
-1. Скачайте универсальный образ `K1tty Tools_2.1.0_universal.dmg` со страницы [Releases](https://github.com/quesada-lab/k1tty-tools/releases) и перетащите приложение в `Applications`.
+1. Скачайте универсальный образ `K1tty Tools_2.1.1_universal.dmg` со страницы [Releases](https://github.com/quesada-lab/k1tty-tools/releases) и перетащите приложение в `Applications`.
 2. Так как сборка не нотаризована в Apple, при первом запуске снимите флаг карантина:
    ```bash
    xattr -cr "/Applications/K1tty Tools.app"
    ```
 
-1. Download the universal `K1tty Tools_2.1.0_universal.dmg` from [Releases](https://github.com/quesada-lab/k1tty-tools/releases) and drag the app into `Applications`.
+1. Download the universal `K1tty Tools_2.1.1_universal.dmg` from [Releases](https://github.com/quesada-lab/k1tty-tools/releases) and drag the app into `Applications`.
 2. Since the build is not notarized with Apple, clear the quarantine attribute before the first launch:
    ```bash
    xattr -cr "/Applications/K1tty Tools.app"

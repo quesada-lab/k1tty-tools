@@ -2196,7 +2196,7 @@ dependencies = [
 
 [[package]]
 name = "k1tty-core"
-version = "2.1.0"
+version = "2.1.1"
 dependencies = [
  "anyhow",
  "base64 0.22.1",
@@ -2223,7 +2223,7 @@ dependencies = [
 
 [[package]]
 name = "k1tty-tools"
-version = "2.1.0"
+version = "2.1.1"
 dependencies = [
  "anyhow",
  "base64 0.22.1",

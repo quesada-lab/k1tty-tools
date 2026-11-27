@@ -637,6 +637,58 @@ fn native_tool_calls_format_properly_for_every_client() {
     let cx_rollout = recent_files(&cx_root.join("sessions"), 6, "jsonl").remove(0);
     let cx_rows = crate::storage::read_jsonl(&cx_rollout).unwrap();
     for row in &cx_rows {
+        if row["type"] == "response_item" {
+            let payload = &row["payload"];
+            let ptype = payload["type"].as_str().unwrap_or("");
+            let id = payload["id"].as_str().unwrap_or("");
+            match ptype {
+                "message" => assert!(id.starts_with("msg_"), "message id prefix: {id}"),
+                "reasoning" => assert!(id.starts_with("rs_"), "reasoning id prefix: {id}"),
+                "function_call" => {
+                    assert!(id.starts_with("fc_"), "function_call id prefix: {id}");
+                    assert!(
+                        payload["call_id"]
+                            .as_str()
+                            .is_some_and(|c| c.starts_with("call_")),
+                        "function_call call_id prefix"
+                    );
+                }
+                "function_call_output" => {
+                    assert!(
+                        id.starts_with("fco_"),
+                        "function_call_output id prefix: {id}"
+                    );
+                    assert!(
+                        payload["call_id"]
+                            .as_str()
+                            .is_some_and(|c| c.starts_with("call_")),
+                        "function_call_output call_id prefix"
+                    );
+                }
+                "custom_tool_call" => {
+                    assert!(id.starts_with("ctc_"), "custom_tool_call id prefix: {id}");
+                    assert!(
+                        payload["call_id"]
+                            .as_str()
+                            .is_some_and(|c| c.starts_with("call_")),
+                        "custom_tool_call call_id prefix"
+                    );
+                }
+                "custom_tool_call_output" => {
+                    assert!(
+                        id.starts_with("ctco_"),
+                        "custom_tool_call_output id prefix: {id}"
+                    );
+                    assert!(
+                        payload["call_id"]
+                            .as_str()
+                            .is_some_and(|c| c.starts_with("call_")),
+                        "custom_tool_call_output call_id prefix"
+                    );
+                }
+                _ => {}
+            }
+        }
         let txt_msg = row["payload"]["item"]["content"][0]["text"]
             .as_str()
             .or_else(|| row["payload"]["content"][0]["text"].as_str())
